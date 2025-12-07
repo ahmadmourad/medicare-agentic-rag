@@ -101,3 +101,66 @@ h1 {
     background-color:#115e59;
     transform: translateY(-2px);
 }
+
+/* ______________________________ */
+
+.clinics-section {
+    padding: 4.5em;
+}
+
+.clinics-section h2 {
+    color:#115e59;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 4rem;
+    font-size: 24px;
+}
+
+.clinics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2em;
+}
+
+h3 {
+    margin-top: 0;
+}
+
+.clinic-item {
+    text-align: center;
+    box-shadow: 5px 8px 15px rgba(0, 0, 0, 0.1);
+    padding: 2em;
+    border-radius: 13px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.clinic-item h3 {
+    color:  #115e59;
+    margin-bottom: 1rem;
+}
+
+.clinic-item p {
+    color: #666;
+    margin-bottom: 1.5rem;
+}
+
+.clinics-section button {
+    padding: 0.8em 1.5em;
+    font-weight: 600;
+    color: #0d9488;
+    background-color: transparent;
+    border: 2px solid #0d9488;
+    border-radius: 12px;
+}
+
+.clinic-item:hover,
+.clinic-item:focus,
+.clinic-item:active {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+}
+
+.clinics-section button:hover {
+    background-color: #0d9488;
+    color: white
+}
