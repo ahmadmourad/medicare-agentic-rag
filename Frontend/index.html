@@ -44,8 +44,7 @@
             <h2>Find a Clinc</h2>
             <div id="clinics-grid" class="clinics-grid"></div>
         </section>
-        
-        
+    
         <form id="booking-clinic-modal">
             <button type="button" class="close-modal-btn" data-closeformbtn="closeModal">&times;</button>
             <h2>Book Appointment</h2>
@@ -56,7 +55,7 @@
                     id="clinic-name-field" 
                     name="clinic-name" 
                     aria-label="Booked Clinic Name"
-                    >
+                    readonly>
             </div>
             <div>
                 <label for="patient-name-field">Your Name</label>
@@ -76,7 +75,7 @@
                 <input 
                     type="date"
                     id="date-field" 
-                    name="date-field" 
+                    name="date-field"
                     aria-label="Appointment Date" 
                     required
                     >
@@ -91,10 +90,12 @@
                     required
                     >
             </div>
-            <button type="submit" class="submit-btn">Confirm Booking</button>            
+            <button type="submit" class="submit-btn">Confirm Booking</button >            
         </form>
 
-
+        <div id="booking-msg" class="booking-done-msg">
+            <button class="close-modal-btn" data-closemsgbtn="closeMsg">&times;</button>
+        </div>
 
        <!-- <section id="pharmacy" class="pharmacy-section">
             <h2>Your Online Pharmacy</h2>

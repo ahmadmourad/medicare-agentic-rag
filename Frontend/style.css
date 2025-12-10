@@ -1,3 +1,9 @@
+@font-face {
+    font-family: smythe;
+    src: url("/fonts/Smythe-Regular.ttf");
+    font-weight: 400;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -66,7 +72,7 @@ nav ul li a:active {
 .hero {
     background: linear-gradient(135deg, #e6fffa 0%, #ebf8ff 100%);
     text-align: center;
-    padding: 15rem 0;
+    padding: 15rem 4rem;
     min-height: 60vh;
 }
 
@@ -105,7 +111,7 @@ h1 {
 /* ______________________________ */
 
 .clinics-section {
-    padding: 4.5em;
+    padding: 4em;
 }
 
 .clinics-section h2 {
@@ -118,7 +124,7 @@ h1 {
 
 .clinics-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2em;
 }
 
@@ -129,7 +135,7 @@ h3 {
 .clinic-item {
     text-align: center;
     box-shadow: 5px 8px 15px rgba(0, 0, 0, 0.1);
-    padding: 2em;
+    padding: 2.5em 1rem;
     border-radius: 13px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -166,7 +172,9 @@ h3 {
 }
 
 
-form {
+
+form,
+.booking-done-msg {
     display: none;
     flex-direction: column;
     gap: 1rem;
@@ -176,12 +184,14 @@ form {
     right: 0;
     left: 0;
     margin: auto;
-    width: 25%;
+    width: 80%;
+    max-width: 450px;
+    min-width: 300px;
     height: fit-content;
     padding: 1rem 2.5rem 2rem;
     background-color: white;
     border-radius: 10px;
-    box-shadow: 5px 5px 5px 5000px #00000080;
+    box-shadow: 5px 5px 30px 5000px rgba(0,0,0,0.4);
     z-index: 3;
     animation: slideDown 0.3s ease;
 }
@@ -261,4 +271,14 @@ input {
 .submit-btn:active {
     background-color: #115e59;
     transform: translateY(-4px);
+}
+
+.booking-done-msg {
+    padding: 1rem 2rem 2rem;
+    border-radius: 5px;
+    font-family: "smythe";
+    font-size: 2rem;
+    color: #115e59;
+    text-align: center;
+    background: #ECFDF5;
 }
