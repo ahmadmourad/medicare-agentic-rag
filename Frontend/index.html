@@ -45,6 +45,69 @@
             <div id="clinics-grid" class="clinics-grid"></div>
         </section>
         
+        
+        <form id="booking-clinic-modal">
+            <button type="button" class="close-modal-btn" data-closeformbtn="closeModal">&times;</button>
+            <h2>Book Appointment</h2>
+            <div>
+                <label for="clinic-name-field">Clinic Name</label>
+                <input 
+                    type="text" 
+                    id="clinic-name-field" 
+                    name="clinic-name" 
+                    aria-label="Booked Clinic Name"
+                    >
+            </div>
+            <div>
+                <label for="patient-name-field">Your Name</label>
+                <input 
+                    type="text"
+                    placeholder="Ahmed " 
+                    id="patient-name-field" 
+                    name="patient-name" 
+                    aria-label="Your name"
+                    pattern="[a-zA-z]+" 
+                    title="Enter characters only, no numbers allowed"
+                    required
+                    >
+            </div>
+            <div>
+                <label for="date-field">Date</label>
+                <input 
+                    type="date"
+                    id="date-field" 
+                    name="date-field" 
+                    aria-label="Appointment Date" 
+                    required
+                    >
+            </div>
+            <div>
+                <label for="time-field">Time</label>
+                <input 
+                    type="time"
+                    id="time-field" 
+                    name="time-field" 
+                    aria-label="Appointment time" 
+                    required
+                    >
+            </div>
+            <button type="submit" class="submit-btn">Confirm Booking</button>            
+        </form>
+
+
+
+       <!-- <section id="pharmacy" class="pharmacy-section">
+            <h2>Your Online Pharmacy</h2>
+            <div class="pharmacy-grid">
+                <div class="pharmacy-item">
+                    <img src="https://i-cf65.ch-static.com/content/dam/cf-consumer-healthcare/panadol-reborn/en_IE/newpackshots202406/IRE-Extra-12s.jpg?auto=format" class="medicine-img" alt="Panadol Extra">
+                    <h3>Panadol Extra</h3>
+                    <p>45 EGP</p>
+                    <button class="buy-btn" data="">Buy Now</button>
+                </div>
+            </div>
+        </section> -->
+        
     </main>
 
     <script src="index.js" type="module"></script>
