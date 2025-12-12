@@ -1,8 +1,10 @@
-import { clinicsArray } from './data.js'
+import { clinicsArray, medicinesArray } from './data.js'
 
 const clinicsGrid = document.getElementById("clinics-grid")
 const clinicBookingForm = document.getElementById("booking-clinic-modal")
 const bookingDoneMsg = document.getElementById('booking-msg')
+const pharmacyGrid = document.getElementById('pharmacy-grid')
+
 
 function renderClinics() {
     const clinicsItemsHtml = clinicsArray.map(clinicObj =>
@@ -19,11 +21,26 @@ function renderClinics() {
 renderClinics()
 
 
+function renderMedicines(){
+    const medicinesHtml = medicinesArray.map(medicine =>                
+        `<div class="pharmacy-item">
+            <img src="${medicine.img}" class="medicine-img" alt="${medicine.name}">
+            <h3>${medicine.name}</h3>
+            <p>${medicine.price} EGP</p>
+            <button class="buy-btn" data-buymedicine="${medicine.name}">Buy Now</button>
+        </div>`
+    ).join('')
+
+    pharmacyGrid.innerHTML = medicinesHtml
+}
+
+renderMedicines()
+
+
 document.addEventListener('click', handleButtonClicks)
 
 function handleButtonClicks(e) {
     
-    console.log(e.target.dataset)
     if (e.target.dataset.book) {
         document.getElementById('clinic-name-field').value = e.target.dataset.book
         clinicBookingForm.style.display = 'flex'
