@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.env
+.venv/
+venv/
+my_venv_name/
+.pytest_cache/
+.coverage
+htmlcov/
+data/feedback.jsonl
+*.log
+node_modules/
