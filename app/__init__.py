@@ -1,0 +1,1 @@
+"""MediCare assistant application package."""
