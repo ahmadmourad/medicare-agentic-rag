@@ -232,7 +232,7 @@ h1 span {
 }
 
 .hero p {
-    max-width: 640px;
+    max-width: 580px;
     margin: 0 auto;
     color: var(--slate-500);
     font-size: 1.08rem;

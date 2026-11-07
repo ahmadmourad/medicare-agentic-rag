@@ -30,6 +30,12 @@ def test_static_frontend(client):
     assert client.get("/images/medicines/panadol-extra.jpg").status_code == 200
 
 
+def test_api_docs_allow_cdn(client):
+    response = client.get("/docs")
+    assert response.status_code == 200
+    assert "cdn.jsdelivr.net" in response.headers["content-security-policy"]
+
+
 def test_security_headers(client):
     response = client.get("/api/health")
     assert response.headers["x-content-type-options"] == "nosniff"

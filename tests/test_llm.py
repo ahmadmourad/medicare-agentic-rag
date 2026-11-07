@@ -29,3 +29,9 @@ def test_empty_fallback_is_helpful():
     answer = llm.fallback_answer("weather", [], None, False)
     assert "could not find" in answer.lower()
     assert "clinics" in answer.lower()
+
+
+def test_medical_text_cleanup():
+    from app.medical_info import _strip_html
+
+    assert _strip_html("<p>Diabetes is a condition .</p>") == "Diabetes is a condition."

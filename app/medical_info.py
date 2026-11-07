@@ -32,7 +32,8 @@ def _clean_query(query: str) -> str:
 def _strip_html(value: str) -> str:
     value = html.unescape(value)
     value = re.sub(r"<[^>]+>", " ", value)
-    return re.sub(r"\s+", " ", value).strip()
+    value = re.sub(r"\s+", " ", value).strip()
+    return re.sub(r"\s+([.,;:!?])", r"\1", value)
 
 
 def fetch_medlineplus(query: str, timeout: float | None = None) -> dict[str, str | None] | None:
