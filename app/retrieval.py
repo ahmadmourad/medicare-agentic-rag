@@ -9,6 +9,8 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
+from .config import settings
+
 
 @dataclass(frozen=True)
 class Chunk:
@@ -89,8 +91,12 @@ class RetrievalIndex:
 
 
 @lru_cache(maxsize=4)
-def load_index(docs_path: str) -> RetrievalIndex:
+def _load_index_cached(docs_path: str) -> RetrievalIndex:
     return RetrievalIndex(docs_path)
+
+
+def load_index(docs_path: str | Path | None = None) -> RetrievalIndex:
+    return _load_index_cached(str(docs_path or settings.docs_path))
 
 
 def format_context(results: list[dict[str, object]], limit: int = 2200) -> str:

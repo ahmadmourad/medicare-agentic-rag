@@ -23,12 +23,12 @@ class Medicine:
 
 
 CLINICS: tuple[Clinic, ...] = (
-    Clinic("General Medicine", "Comprehensive care for all ages.", ("general", "gp", "physician", "doctor")),
-    Clinic("Dental Care", "Professional dental services.", ("dentist", "dental", "tooth", "teeth")),
-    Clinic("Pediatrics", "Specialized care for children.", ("pediatric", "pediatrics", "child", "children", "baby")),
-    Clinic("Cardiology", "Heart health and cardiovascular care.", ("cardiology", "cardio", "cardiac", "heart")),
-    Clinic("Dermatology", "Skin, hair, and nail treatments.", ("dermatology", "derma", "skin", "hair", "nail")),
-    Clinic("Orthopedics", "Bone and joint specialists.", ("orthopedics", "ortho", "bone", "joint")),
+    Clinic("General Medicine", "Comprehensive care for all ages.", ("general", "gp", "physician")),
+    Clinic("Dental Care", "Professional dental services.", ("dentist", "dentists", "dental", "tooth", "teeth")),
+    Clinic("Pediatrics", "Specialized care for children.", ("pediatrician", "pediatricians", "pediatric", "pediatrics", "child", "children", "baby")),
+    Clinic("Cardiology", "Heart health and cardiovascular care.", ("cardiologist", "cardiologists", "cardiology", "cardio", "cardiac", "heart")),
+    Clinic("Dermatology", "Skin, hair, and nail treatments.", ("dermatologist", "dermatologists", "dermatology", "derma", "skin", "hair", "nail")),
+    Clinic("Orthopedics", "Bone and joint specialists.", ("orthopedist", "orthopedists", "orthopedics", "ortho", "bone", "joint")),
 )
 
 MEDICINES: tuple[Medicine, ...] = (
