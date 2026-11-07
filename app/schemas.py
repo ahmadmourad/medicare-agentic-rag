@@ -38,6 +38,7 @@ class Source(BaseModel):
 class ChatResponse(BaseModel):
     reply: str
     intent: str
+    entities: dict[str, Any] = Field(default_factory=dict)
     sources: list[Source] = Field(default_factory=list)
 
 

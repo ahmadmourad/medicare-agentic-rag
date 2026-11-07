@@ -128,7 +128,7 @@ def chat(payload: ChatRequest) -> ChatResponse:
     result = agent.handle(payload.message)
 
     if result.action in agent.COMMAND_ACTIONS:
-        return ChatResponse(reply=result.reply, intent=result.action)
+        return ChatResponse(reply=result.reply, intent=result.action, entities=result.entities)
 
     index = get_index()
     results = index.search(payload.message, k=3)
@@ -155,7 +155,7 @@ def chat(payload: ChatRequest) -> ChatResponse:
     if medical and medical.get("url"):
         sources.append(Source(title=str(medical.get("title") or "MedlinePlus"), url=str(medical["url"])))
 
-    return ChatResponse(reply=reply, intent=result.action, sources=sources)
+    return ChatResponse(reply=reply, intent=result.action, entities=result.entities, sources=sources)
 
 
 @app.post("/api/agent", response_model=AgentResponse)

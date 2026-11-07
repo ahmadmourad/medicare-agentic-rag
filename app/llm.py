@@ -90,10 +90,9 @@ def fallback_answer(
     needs_disclaimer: bool,
 ) -> str:
     if medical and medical.get("summary"):
-        parts = [f"**{medical.get('title') or question}**", str(medical["summary"])]
-        if medical.get("url"):
-            parts.append(f"Source: {medical['url']}")
-        answer = "\n\n".join(parts)
+        answer = "\n\n".join(
+            [str(medical.get("title") or question), str(medical["summary"])]
+        )
     elif results:
         text = str(results[0]["text"]).strip()
         text = re.sub(r"^#{1,3}\s*", "", text)

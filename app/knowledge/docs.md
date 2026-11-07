@@ -72,7 +72,7 @@ Delivery in Cairo and Giza is same day for orders placed before 18:00. Delivery 
 ## Contact
 
 - Phone: +20 100 000 0000
-- Email: support@medicare.example
+- Email: hello@medicare.example
 - Address: 12 Nile Street, Cairo, Egypt
 - Clinic hours: every day from 9:00 to 21:00
 - Pharmacy hours: every day from 9:00 to 23:00

@@ -466,7 +466,7 @@ def handle(text: str) -> AgentResponse:
             action="navigate_contact",
             entities={},
             reply=(
-                "Call +20 100 000 0000, email support@medicare.example, or visit "
+                "Call +20 100 000 0000, email hello@medicare.example, or visit "
                 "12 Nile Street, Cairo. Clinics are open daily 9:00-21:00 and the "
                 "pharmacy 9:00-23:00. Opening the contact section now."
             ),

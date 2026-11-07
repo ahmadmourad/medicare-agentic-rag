@@ -1,112 +1,226 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medical Service Site</title>
-    <link rel="icon" type="image/png" href="images/app-logo.png" />
-    <link rel="stylesheet" href="style.css">
-
+    <title>MediCare | Medical Assistant</title>
+    <meta name="description" content="Book clinic appointments, check medicine prices, and ask a grounded medical assistant for general health information.">
+    <link rel="icon" type="image/png" href="images/app-logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <a class="skip-link" href="#main">Skip to content</a>
 
-    <header>
-        <nav aria-label="Navigation Bar">
-            <div class="nav-title">Medical Agent</div>
-            <ul>
+    <header class="site-header">
+        <nav aria-label="Main navigation">
+            <a class="nav-title" href="#home">MediCare</a>
+            <ul id="nav-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#clinics">Clincs</a></li>
-                <li> <a href="#pharmacy">Pharmacy</a></li>
-                <li><a href="#contact">Contact Us</a></li>
+                <li><a href="#clinics">Clinics</a></li>
+                <li><a href="#pharmacy">Pharmacy</a></li>
+                <li><a href="#contact">Contact</a></li>
             </ul>
-            <button class="mobile-menu" aria-label="Navigation bar menu mobile button">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
+            <div class="nav-actions">
+                <button type="button" class="nav-chat" data-open-chat>Ask Assistant</button>
+                <button class="mobile-menu" type="button" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
         </nav>
     </header>
 
-
-    <main>
-
+    <main id="main">
         <section id="home" class="hero">
-            <h1>Your Health, Our Priority</h1>
-            <p>Book appointments with top doctors and order medicines online.</p>
-            <a href="#clinics" role="button">Book Now</a>
+            <div class="hero-content">
+                <span class="badge">AI medical assistant</span>
+                <h1>Your health, <span>our priority.</span></h1>
+                <p>
+                    Book appointments with trusted clinics, check medicine prices, and get clear
+                    answers to general health questions in one place.
+                </p>
+                <div class="hero-actions">
+                    <a href="#clinics" class="btn btn-primary">Book an appointment</a>
+                    <button type="button" class="btn btn-ghost" data-open-chat>Ask the assistant</button>
+                </div>
+                <ul class="hero-stats" aria-label="Service highlights">
+                    <li><strong>6</strong><span>clinics</span></li>
+                    <li><strong>21</strong><span>medicines</span></li>
+                    <li><strong>24/7</strong><span>assistant</span></li>
+                </ul>
+            </div>
         </section>
 
-        
+        <section id="how-it-works" class="steps-section">
+            <div class="section-heading">
+                <span class="eyebrow">How it works</span>
+                <h2>Ask, decide, and take action</h2>
+                <p>The assistant understands what you need and opens the right part of the site for you.</p>
+            </div>
+            <div class="steps-grid">
+                <article class="step-card">
+                    <span class="step-number">1</span>
+                    <h3>Describe what you need</h3>
+                    <p>Ask about a clinic, a medicine price, or a general health topic in plain language.</p>
+                </article>
+                <article class="step-card">
+                    <span class="step-number">2</span>
+                    <h3>Get a grounded answer</h3>
+                    <p>Answers use the clinic catalogue, pharmacy data, and trusted medical references.</p>
+                </article>
+                <article class="step-card">
+                    <span class="step-number">3</span>
+                    <h3>Complete the task</h3>
+                    <p>Book an appointment or open a demo checkout without leaving the conversation.</p>
+                </article>
+            </div>
+        </section>
 
         <section id="clinics" class="clinics-section">
-            <h2>Find a Clinc</h2>
+            <div class="section-heading">
+                <span class="eyebrow">Clinics</span>
+                <h2>Find a clinic</h2>
+                <p>Choose a specialty and reserve a time that works for you.</p>
+            </div>
             <div id="clinics-grid" class="clinics-grid"></div>
         </section>
 
-
-    
-        <form id="booking-clinic-modal">
-            <button type="button" class="close-modal-btn" data-closeformbtn="closeModal">&times;</button>
-            <h2>Book Appointment</h2>
-            <div>
-                <label for="clinic-name-field">Clinic Name</label>
-                <input 
-                    type="text" 
-                    id="clinic-name-field" 
-                    name="clinic-name" 
-                    aria-label="Booked Clinic Name"
-                    readonly>
+        <section id="pharmacy" class="pharmacy-section">
+            <div class="section-heading">
+                <span class="eyebrow">Pharmacy</span>
+                <h2>Your online pharmacy</h2>
+                <p>Everyday medicines with clear prices. Prescription items are marked.</p>
             </div>
-            <div>
-                <label for="patient-name-field">Your Name</label>
-                <input 
-                    type="text"
-                    placeholder="Ahmed " 
-                    id="patient-name-field" 
-                    name="patient-name" 
-                    aria-label="Your name"
-                    pattern="[a-zA-z]+" 
-                    title="Enter characters only, no numbers allowed"
-                    required
-                    >
-            </div>
-            <div>
-                <label for="date-field">Date</label>
-                <input 
-                    type="date"
-                    id="date-field" 
-                    name="date-field"
-                    aria-label="Appointment Date" 
-                    required
-                    >
-            </div>
-            <div>
-                <label for="time-field">Time</label>
-                <input 
-                    type="time"
-                    id="time-field" 
-                    name="time-field" 
-                    aria-label="Appointment time" 
-                    required
-                    >
-            </div>
-            <button type="submit" class="submit-btn">Confirm Booking</button >            
-        </form>
-
-        <div id="booking-msg" class="booking-done-msg">
-            <button class="close-modal-btn" data-closemsgbtn="closeMsg">&times;</button>
-        </div>
-
-       <section id="pharmacy" class="pharmacy-section">
-            <h2>Your Online Pharmacy</h2>
             <div id="pharmacy-grid" class="pharmacy-grid"></div>
         </section>
-        
+
+        <section id="contact" class="contact-section">
+            <div class="section-heading">
+                <span class="eyebrow">Contact</span>
+                <h2>We are here to help</h2>
+                <p>Reach the team directly or ask the assistant any time.</p>
+            </div>
+            <div class="contact-grid">
+                <article class="contact-card">
+                    <h3>Call us</h3>
+                    <p>Daily from 9:00 to 21:00</p>
+                    <a href="tel:+201000000000">+20 100 000 0000</a>
+                </article>
+                <article class="contact-card">
+                    <h3>Email us</h3>
+                    <p>We reply within one business day</p>
+                    <a href="mailto:hello@medicare.example">hello@medicare.example</a>
+                </article>
+                <article class="contact-card">
+                    <h3>Visit us</h3>
+                    <p>12 Nile Street, Cairo, Egypt</p>
+                    <a href="#home" data-open-chat>Ask for directions</a>
+                </article>
+                <article class="contact-card">
+                    <h3>Opening hours</h3>
+                    <p>Clinics: 9:00 - 21:00</p>
+                    <p>Pharmacy: 9:00 - 23:00</p>
+                </article>
+            </div>
+        </section>
     </main>
+
+    <footer class="site-footer">
+        <p><strong>MediCare</strong> is a graduation project demo. It does not replace professional medical advice.</p>
+        <p>Built with FastAPI, scikit-learn, and vanilla JavaScript.</p>
+    </footer>
+
+    <form id="booking-modal" class="modal" aria-labelledby="booking-title">
+        <button type="button" class="close-modal-btn" data-close-modal="booking" aria-label="Close booking form">&times;</button>
+        <h2 id="booking-title">Book an appointment</h2>
+        <p class="modal-subtitle">Confirm the details below and we will reserve your slot.</p>
+        <div class="field">
+            <label for="clinic-name-field">Clinic</label>
+            <input type="text" id="clinic-name-field" name="clinic-name" readonly>
+        </div>
+        <div class="field">
+            <label for="patient-name-field">Your name</label>
+            <input type="text" id="patient-name-field" name="patient-name" placeholder="Ahmed Mohamed"
+                pattern="[A-Za-z\s.'-]{2,50}" title="Use letters, spaces, dots, or hyphens" autocomplete="name" required>
+        </div>
+        <div class="field-row">
+            <div class="field">
+                <label for="date-field">Date</label>
+                <input type="date" id="date-field" name="date-field" required>
+            </div>
+            <div class="field">
+                <label for="time-field">Time</label>
+                <input type="time" id="time-field" name="time-field" required>
+            </div>
+        </div>
+        <button type="submit" class="submit-btn">Confirm booking</button>
+    </form>
+
+    <div id="booking-msg" class="booking-done-msg" role="status" aria-live="polite">
+        <button type="button" class="close-modal-btn" data-close-modal="message" aria-label="Close confirmation">&times;</button>
+        <p id="booking-msg-text"></p>
+    </div>
+
+    <form id="checkout-modal" class="modal checkout-modal" aria-labelledby="checkout-title">
+        <button type="button" class="close-modal-btn" data-close-modal="checkout" aria-label="Close checkout">&times;</button>
+        <h2 id="checkout-title">Demo checkout</h2>
+        <div class="checkout-product">
+            <img id="checkout-image" src="images/app-logo.png" alt="" width="96" height="96">
+            <div>
+                <h3 id="checkout-name">Medicine</h3>
+                <p id="checkout-price">0 EGP</p>
+            </div>
+        </div>
+        <div class="field">
+            <label for="checkout-quantity">Quantity</label>
+            <input type="number" id="checkout-quantity" name="quantity" min="1" max="20" value="1" required>
+        </div>
+        <p class="checkout-total">Total: <strong id="checkout-total">0 EGP</strong></p>
+        <div class="field">
+            <label for="checkout-name-input">Full name</label>
+            <input type="text" id="checkout-name-input" name="customer-name" placeholder="Ahmed Mohamed" autocomplete="name" required>
+        </div>
+        <div class="field">
+            <label for="checkout-address">Delivery address</label>
+            <input type="text" id="checkout-address" name="address" placeholder="Street, building, city" autocomplete="street-address" required>
+        </div>
+        <p class="demo-note">This is a demo checkout. No payment details are collected.</p>
+        <button type="submit" class="submit-btn">Place demo order</button>
+    </form>
+
+    <div id="checkout-msg" class="booking-done-msg" role="status" aria-live="polite">
+        <button type="button" class="close-modal-btn" data-close-modal="message" aria-label="Close confirmation">&times;</button>
+        <p id="checkout-msg-text"></p>
+    </div>
+
+    <button id="chat-toggle" class="chat-toggle" type="button" aria-expanded="false" aria-controls="chat-panel">
+        <span class="chat-toggle-dot" aria-hidden="true"></span>
+        Chat with us
+    </button>
+
+    <section id="chat-panel" class="chat-panel" aria-label="MediCare assistant" hidden>
+        <div class="chat-header">
+            <div>
+                <strong>MediCare Assistant</strong>
+                <span class="chat-status"><span aria-hidden="true"></span>Online</span>
+            </div>
+            <button id="chat-close" class="chat-close" type="button" aria-label="Close chat">&times;</button>
+        </div>
+        <div id="chat-messages" class="chat-messages" role="log" aria-live="polite"></div>
+        <div id="chat-suggestions" class="chat-suggestions" aria-label="Suggested questions"></div>
+        <form id="chat-form" class="chat-form" autocomplete="off">
+            <label class="sr-only" for="chat-input">Your message</label>
+            <input id="chat-input" name="message" type="text" maxlength="500"
+                placeholder="Ask about clinics or medicines..." required>
+            <button id="chat-send" type="submit">Send</button>
+        </form>
+    </section>
 
     <script src="index.js" type="module"></script>
 </body>
