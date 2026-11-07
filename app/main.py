@@ -45,6 +45,14 @@ class RateLimiter:
             return True
         now = time.monotonic()
         with self._lock:
+            if len(self._hits) > 4096:
+                stale = [
+                    item
+                    for item, records in self._hits.items()
+                    if not records or now - records[-1] > self.window
+                ]
+                for item in stale:
+                    del self._hits[item]
             hits = self._hits[key]
             while hits and now - hits[0] > self.window:
                 hits.popleft()

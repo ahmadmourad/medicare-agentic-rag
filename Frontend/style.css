@@ -813,6 +813,7 @@ section {
 }
 
 .chat-toggle[aria-expanded="true"] {
+    visibility: hidden;
     opacity: 0;
     pointer-events: none;
 }
