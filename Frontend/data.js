@@ -32,12 +32,12 @@ export const medicinesArray = [
         price: 45
     },
     {
-        img: "images/medicines/aspirin.jpg",
+        img: "images/medicines/aspirin.png",
         name: "Aspirin",
         price: 7
     },
     {
-        img: "images/medicines/telfast.jpg",
+        img: "images/medicines/telfast.png",
         name: "Telfast",
         price: 63
     },
