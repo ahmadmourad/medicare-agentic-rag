@@ -7,7 +7,7 @@
   paper: "a4",
   margin: (x: 2.2cm, top: 2.3cm, bottom: 2.3cm),
   header: align(right, text(8pt, fill: luma(130))[MediCare Assistant]),
-  footer: align(center, text(8pt, fill: luma(130))[Computer Science Graduation Project · 2026]),
+  footer: align(center, text(8pt, fill: luma(130))[Personal Project · 2026]),
 )
 
 #set text(font: "New Computer Modern", size: 10.5pt)
@@ -23,7 +23,7 @@
   #text(size: 13pt)[A grounded medical assistant for clinic booking, pharmacy browsing, and general health information]
   #v(0.9em)
   #text(size: 10pt)[Ahmad Mourad \
-  Computer Science Graduation Project · 2026]
+  Personal Project · 2026]
 ]
 
 #v(1.2em)

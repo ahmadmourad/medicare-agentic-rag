@@ -39,8 +39,8 @@ and a grounded medical answer.
 - **Handle small talk and emergencies.** Greetings and thanks are answered normally; emergency
   phrases produce an urgent message with local emergency numbers instead of a chat reply.
 
-This is a graduation project demo. It does not diagnose, prescribe, process payments, or reserve real
-appointments. See [Limitations](#limitations).
+This is a personal portfolio project. It does not diagnose, prescribe, process payments, or reserve
+real appointments. See [Limitations](#limitations).
 
 ## Screenshots
 
@@ -294,5 +294,5 @@ medicare-ai/
 ## Author
 
 Ahmad Mourad
-Computer Science, 2026
+Computer Science
 [workwithahmedm@gmail.com](mailto:workwithahmedm@gmail.com)
