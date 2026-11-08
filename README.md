@@ -307,5 +307,4 @@ medicare-ai/
 ## Author
 
 Ahmad Mourad
-Computer Science
 [workwithahmedm@gmail.com](mailto:workwithahmedm@gmail.com)
