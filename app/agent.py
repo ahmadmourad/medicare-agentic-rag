@@ -69,14 +69,17 @@ BOOK_TERMS = (
 )
 INFO_TERMS = ("what is", "what are", "tell me about", "do you have", "info", "used for", "uses")
 MEDICAL_TERMS = (
-    "symptom", "cause", "treatment", "cure", "prevent", "side effect",
-    "interact", "diagnose", "diabetes", "cancer", "flu", "cold", "covid",
-    "headache", "migraine", "fever", "pain", "blood pressure", "hypertension",
-    "cholesterol", "pregnancy", "depression", "anxiety", "infection", "allergy",
-    "asthma", "arthritis", "obesity", "anemia", "thyroid", "kidney", "liver",
-    "hepatitis", "eczema", "psoriasis", "acne", "gout", "ulcer", "gerd",
-    "constipation", "diarrhea", "vomiting", "nausea", "dizziness", "fatigue",
-    "insomnia", "stress", "burn", "fracture", "dehydration", "malaria",
+    "symptom", "symptoms", "cause", "causes", "treatment", "treatments",
+    "cure", "prevent", "side effect", "side effects", "interact",
+    "interaction", "interactions", "diagnose", "diabetes", "cancer", "flu",
+    "cold", "covid", "headache", "headaches", "migraine", "migraines",
+    "fever", "pain", "blood pressure", "hypertension", "cholesterol",
+    "pregnancy", "depression", "anxiety", "infection", "infections",
+    "allergy", "allergies", "asthma", "arthritis", "obesity", "anemia",
+    "thyroid", "kidney", "liver", "hepatitis", "eczema", "psoriasis",
+    "acne", "gout", "ulcer", "ulcers", "gerd", "constipation", "diarrhea",
+    "vomiting", "nausea", "dizziness", "fatigue", "insomnia", "stress",
+    "burn", "burns", "fracture", "fractures", "dehydration", "malaria",
 )
 
 NAME_STOPWORDS = {
@@ -322,8 +325,8 @@ def handle(text: str) -> AgentResponse:
             action="emergency",
             entities={},
             reply=(
-                "This may be a medical emergency. Call your local emergency number "
-                "(108 in Egypt or 911) or go to the nearest emergency room now. "
+                "This may be a medical emergency. Call 123 for an ambulance in Egypt "
+                "or your local emergency number, and go to the nearest emergency room now. "
                 "Do not wait for an online reply."
             ),
         )
@@ -381,7 +384,10 @@ def handle(text: str) -> AgentResponse:
             reply=f"{medicine.name} costs {medicine.price} EGP.",
         )
 
-    if medicine and _contains_any(lowered, ("side effect", "interact", "safe to take with")):
+    if medicine and _contains_any(
+        lowered,
+        ("side effect", "side effects", "interact", "interaction", "interactions", "safe to take with"),
+    ):
         return AgentResponse(
             action="medical_question",
             entities=_medicine_entities(medicine),

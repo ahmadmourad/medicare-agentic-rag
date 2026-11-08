@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=2">
 </head>
 
 <body>
@@ -39,7 +39,7 @@
     <main id="main">
         <section id="home" class="hero">
             <div class="hero-content">
-                <span class="badge">AI medical assistant</span>
+                <span class="badge">Online medical assistant</span>
                 <h1>Your health, <span>our priority.</span></h1>
                 <p>
                     Book appointments with trusted clinics, check medicine prices, and get clear
@@ -95,7 +95,7 @@
             <div class="section-heading">
                 <span class="eyebrow">Pharmacy</span>
                 <h2>Your online pharmacy</h2>
-                <p>Everyday medicines with clear prices. Prescription items are marked.</p>
+                <p>Everyday medicines with clear prices. Ask the assistant for dosage or prescription details.</p>
             </div>
             <div id="pharmacy-grid" class="pharmacy-grid"></div>
         </section>
@@ -132,14 +132,14 @@
     </main>
 
     <footer class="site-footer">
-        <p><strong>MediCare</strong> is a graduation project demo. It does not replace professional medical advice.</p>
+        <p><strong>MediCare</strong> provides general health information only and does not replace professional medical advice.</p>
         <p>Built with FastAPI, scikit-learn, and vanilla JavaScript.</p>
     </footer>
 
     <form id="booking-modal" class="modal" aria-labelledby="booking-title">
         <button type="button" class="close-modal-btn" data-close-modal="booking" aria-label="Close booking form">&times;</button>
-        <h2 id="booking-title">Book an appointment</h2>
-        <p class="modal-subtitle">Confirm the details below and we will reserve your slot.</p>
+        <h2 id="booking-title">Book a demo appointment</h2>
+        <p class="modal-subtitle">Fill in the details to see a demo confirmation. No real slot is reserved.</p>
         <div class="field">
             <label for="clinic-name-field">Clinic</label>
             <input type="text" id="clinic-name-field" name="clinic-name" readonly>
@@ -159,7 +159,7 @@
                 <input type="time" id="time-field" name="time-field" required>
             </div>
         </div>
-        <button type="submit" class="submit-btn">Confirm booking</button>
+        <button type="submit" class="submit-btn">Confirm demo booking</button>
     </form>
 
     <div id="booking-msg" class="booking-done-msg" role="status" aria-live="polite">
@@ -222,7 +222,7 @@
         </form>
     </section>
 
-    <script src="index.js" type="module"></script>
+    <script src="index.js?v=2" type="module"></script>
 </body>
 
 </html>

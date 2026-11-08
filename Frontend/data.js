@@ -32,9 +32,9 @@ export const medicinesArray = [
         price: 45
     },
     {
-        img: "images/medicines/aspirin.png",
+        img: "images/medicines/aspirin-protect2.png",
         name: "Aspirin",
-        price: 7
+        price: 78
     },
     {
         img: "images/medicines/telfast.png",
@@ -42,7 +42,7 @@ export const medicinesArray = [
         price: 63
     },
     {
-        img: "images/medicines/metformin-500mg.jpg",
+        img: "images/medicines/metformin-tablet-500mg.png",
         name: "Metformin 500mg",
         price: 8
     },

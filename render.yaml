@@ -12,4 +12,4 @@ services:
       - key: LLM_PROVIDER
         value: none
       - key: MEDLINEPLUS_ENABLED
-        value: true
+        value: "true"

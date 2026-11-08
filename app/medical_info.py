@@ -62,7 +62,7 @@ def fetch_medlineplus(query: str, timeout: float | None = None) -> dict[str, str
         summary: str | None = None
         for content in document.findall("content"):
             name = content.get("name")
-            raw = content.text or ""
+            raw = "".join(content.itertext())
             if name == "title" and not title:
                 title = _strip_html(raw)
             elif name in {"FullSummary", "snippet"} and not summary:

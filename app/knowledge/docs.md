@@ -39,7 +39,7 @@ The pharmacy stocks pain relief, allergy, diabetes, antibiotic, antiseptic, and 
 | Medicine | Strength | Price | Use | Prescription |
 | --- | --- | --- | --- | --- |
 | Panadol Extra | 500 mg paracetamol | 45 EGP | Pain and fever relief. | No |
-| Aspirin | as labelled on the pack | 7 EGP | Pain relief and anti-inflammatory. | No |
+| Aspirin | as labelled on the pack | 78 EGP | Pain relief and anti-inflammatory. | No |
 | Telfast | as labelled on the pack | 63 EGP | Non-drowsy allergy relief. | No |
 | Metformin 500mg | 500 mg | 8 EGP | Type 2 diabetes medication. | No |
 | Insulin Pen | as prescribed | 200 EGP | Insulin injection pen. | Yes |
@@ -67,7 +67,7 @@ The pharmacy stocks pain relief, allergy, diabetes, antibiotic, antiseptic, and 
 3. Enter the delivery name and address.
 4. Confirm the demo order. No real payment is taken on this website.
 
-Delivery in Cairo and Giza is same day for orders placed before 18:00. Delivery costs 50 EGP and is free for orders over 500 EGP. Other areas are delivered within two to three working days. Payment is cash on delivery or a demo card at checkout; the demo checkout does not store card details. Prescription-only medicines require a valid prescription that is checked by the pharmacist before dispatch. Unopened medicines can be returned within seven days with the receipt. Cold-chain items cannot be returned.
+Delivery in Cairo and Giza is same day for orders placed before 18:00. Delivery costs 50 EGP and is free for orders over 500 EGP. Other areas are delivered within two to three working days. The demo checkout shows the item total only and does not add delivery fees. Real orders are paid cash on delivery; the demo checkout collects no payment details. Prescription-only medicines require a valid prescription that is checked by the pharmacist before dispatch. Unopened medicines can be returned within seven days with the receipt. Cold-chain items cannot be returned.
 
 ## Contact
 
@@ -104,7 +104,7 @@ For medical questions the assistant retrieves the most relevant sections from th
 - Can I pay with a card? The website shows a demo checkout only. Real orders are paid cash on delivery.
 - What are your opening hours? Clinics open 9:00-21:00 and the pharmacy 9:00-23:00, every day.
 - Can I cancel an appointment? Yes, call the clinic at least two hours before the appointment.
-- Is MediCare for emergencies? No. For emergencies call 108 in Egypt or 911, or go to the nearest emergency room.
+- Is MediCare for emergencies? No. For emergencies call your local emergency services or go to the nearest emergency room.
 
 ## Safety and privacy
 

@@ -34,7 +34,7 @@ CLINICS: tuple[Clinic, ...] = (
 MEDICINES: tuple[Medicine, ...] = (
     Medicine("Panadol Extra", 45, "500 mg paracetamol",
              "Pain and fever relief.", ("panadol extra", "panadol")),
-    Medicine("Aspirin", 7, "as labelled on the pack",
+    Medicine("Aspirin", 78, "as labelled on the pack",
              "Pain relief and anti-inflammatory.", ("aspirin",)),
     Medicine("Telfast", 63, "as labelled on the pack",
              "Non-drowsy allergy relief.", ("telfast", "fexofenadine")),

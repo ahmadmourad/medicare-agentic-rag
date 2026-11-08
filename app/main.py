@@ -62,6 +62,7 @@ class RateLimiter:
             return True
 
 
+RATE_LIMITED_PATHS = frozenset({"/api/chat", "/api/agent", "/api/feedback"})
 limiter = RateLimiter(settings.rate_limit_per_minute)
 feedback_lock = threading.Lock()
 
@@ -87,13 +88,15 @@ def get_index() -> RetrievalIndex:
 
 @app.middleware("http")
 async def security_headers(request: Request, call_next):
-    if request.url.path.startswith("/api/"):
+    if request.url.path in RATE_LIMITED_PATHS:
         forwarded = request.headers.get("x-forwarded-for", "")
         key = forwarded.split(",")[0].strip() or (request.client.host if request.client else "anonymous")
         if not limiter.allow(key):
             return JSONResponse({"detail": "Too many requests. Please wait a minute."}, status_code=429)
 
     response = await call_next(request)
+    if not request.url.path.startswith("/api/"):
+        response.headers["Cache-Control"] = "no-cache, must-revalidate"
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["X-Frame-Options"] = "DENY"
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
@@ -200,7 +203,13 @@ def feedback(payload: FeedbackRequest) -> dict[str, str]:
     return {"status": "ok"}
 
 
-if settings.frontend_dir.exists():
-    app.mount("/", StaticFiles(directory=settings.frontend_dir, html=True), name="frontend")
-else:
-    logger.warning("Frontend directory not found: %s", settings.frontend_dir)
+def mount_frontend(application: FastAPI) -> None:
+    if settings.frontend_dir.is_dir():
+        application.mount(
+            "/", StaticFiles(directory=settings.frontend_dir, html=True), name="frontend"
+        )
+    else:
+        logger.warning("Frontend directory not found: %s", settings.frontend_dir)
+
+
+mount_frontend(app)

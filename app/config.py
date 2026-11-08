@@ -17,17 +17,17 @@ class Settings(BaseSettings):
     docs_path: Path = BASE_DIR / "app" / "knowledge" / "docs.md"
     feedback_path: Path = BASE_DIR / "data" / "feedback.jsonl"
 
-    # "none", "gemini", "groq" or "ollama"
+    # "none", "gemini", or "groq"
     llm_provider: str = "none"
     llm_api_key: str = ""
     llm_model: str = ""
+    llm_fallback_model: str = ""
     llm_base_url: str = ""
     llm_timeout: float = 25.0
 
     medlineplus_enabled: bool = True
     medlineplus_timeout: float = 6.0
 
-    max_message_length: int = 500
     rate_limit_per_minute: int = 40
 
     @property

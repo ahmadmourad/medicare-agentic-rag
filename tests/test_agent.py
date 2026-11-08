@@ -71,6 +71,8 @@ def test_medicine_info_mentions_prescription():
     assert result.action == "medicine_info"
     assert result.entities["prescription"] is True
     assert "prescription" in result.reply.lower()
+    assert agent.handle("what are the side effects of panadol").action == "medical_question"
+    assert agent.handle("symptoms of dehydration").action == "medical_question"
 
 
 def test_booking_entities():
@@ -138,3 +140,97 @@ def test_generic_buy_asks_for_medicine():
     assert result.action == "buy_medicine"
     assert "medicine" not in result.entities
     assert "which medicine" in result.reply.lower()
+
+
+@pytest.mark.parametrize(
+    "text,expected",
+    [
+        ("today", "2026-11-08"),
+        ("tomorrow", "2026-11-09"),
+        ("day after tomorrow", "2026-11-10"),
+        ("2027-01-15", "2027-01-15"),
+        ("15/01/2027", "2027-01-15"),
+        ("15-01-27", "2027-01-15"),
+        ("15 january", "2027-01-15"),
+        ("january 15", "2027-01-15"),
+        ("monday", "2026-11-09"),
+        ("31/02/2027", None),
+        ("31 february", None),
+        ("not a date", None),
+    ],
+)
+def test_date_parsing(text, expected):
+    assert agent.find_date(text, today=date(2026, 11, 8)) == expected
+
+
+@pytest.mark.parametrize(
+    "text,expected",
+    [
+        ("12 am", "00:00"),
+        ("12 pm", "12:00"),
+        ("5 pm", "17:00"),
+        ("10:30 am", "10:30"),
+        ("17:30", "17:30"),
+        ("13 pm", None),
+        ("25:00", None),
+        ("10:75", None),
+        ("no time", None),
+    ],
+)
+def test_time_parsing(text, expected):
+    assert agent.find_time(text) == expected
+
+
+@pytest.mark.parametrize(
+    "text,expected",
+    [
+        ("buy 25 packs of panadol", 20),
+        ("buy 0 packs of panadol", 1),
+        ("buy three boxes of panadol", 3),
+        ("buy 2 panadol", 2),
+        ("buy panadol", None),
+    ],
+)
+def test_quantity_parsing(text, expected):
+    assert agent.find_quantity(text) == expected
+
+
+@pytest.mark.parametrize(
+    "text,expected",
+    [
+        ("my name is Sara Ali", "Sara Ali"),
+        ("book a dentist for John Doe tomorrow", "John Doe"),
+        ("for Alice", "Alice"),
+        ("my name is the", None),
+        ("for the clinic", None),
+    ],
+)
+def test_name_parsing(text, expected):
+    assert agent.find_name(text) == expected
+
+
+def test_generic_booking_extracts_all_entities():
+    result = agent.handle("book tomorrow at 5 pm for John")
+    assert result.action == "book_appointment"
+    assert result.entities == {
+        "name": "John",
+        "date": (date.today() + timedelta(days=1)).isoformat(),
+        "time": "17:00",
+    }
+
+
+def test_single_entity_mentions():
+    clinic = agent.handle("cardiology")
+    assert clinic.action == "book_appointment"
+    assert clinic.entities["clinic"] == "Cardiology"
+
+    medicine = agent.handle("panadol")
+    assert medicine.action == "medicine_info"
+    assert medicine.entities["medicine"] == "Panadol Extra"
+
+
+def test_emergency_reply_uses_correct_local_number():
+    result = agent.handle("i have chest pain")
+    assert result.action == "emergency"
+    assert "123" in result.reply
+    assert "108" not in result.reply

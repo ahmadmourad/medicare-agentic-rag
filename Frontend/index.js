@@ -1,4 +1,4 @@
-import { clinicsArray, medicinesArray } from "./data.js";
+import { clinicsArray, medicinesArray } from "./data.js?v=2";
 
 const API_BASE = "/api";
 const MAX_QUANTITY = 20;
@@ -188,6 +188,7 @@ function openCheckout(entities = {}) {
     document.getElementById("checkout-name").textContent = medicine.name;
     document.getElementById("checkout-price").textContent = `${medicine.price} EGP`;
     document.getElementById("checkout-name-input").value = entities.name || "";
+    document.getElementById("checkout-address").value = entities.address || "";
 
     const quantity = document.getElementById("checkout-quantity");
     const requestedQuantity = Number.parseInt(entities.quantity, 10) || 1;
@@ -378,9 +379,9 @@ function handleBookingSubmit(event) {
     const date = dateField.value;
     const time = document.getElementById("time-field").value;
 
-    bookingMessageText.textContent = `Thank you, ${name}. Your appointment at ${clinic} is booked for ${formatDate(
+    bookingMessageText.textContent = `Thank you, ${name}. Your demo appointment request for ${clinic} is confirmed for ${formatDate(
         date
-    )} at ${formatTime(time)}. This is a demo confirmation.`;
+    )} at ${formatTime(time)}. This is a demo confirmation; no real slot was reserved.`;
 
     bookingModal.reset();
     closeModal(bookingModal);
