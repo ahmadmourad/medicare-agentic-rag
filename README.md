@@ -6,18 +6,18 @@ Ask for a medicine price and the pharmacy card is highlighted. Ask a general hea
 answer uses a MedlinePlus summary when available, with a curated knowledge base for site questions.
 
 The app runs without a GPU, without a vector database, and without an API key. It is built with
-FastAPI, scikit-learn, and vanilla JavaScript, and it ships with 160 automated tests.
+FastAPI, scikit-learn, and vanilla JavaScript, and it ships with 163 automated tests.
 
 [![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115+-009688?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![Tests](https://img.shields.io/badge/tests-160%20passing-brightgreen)](#testing)
+[![Tests](https://img.shields.io/badge/tests-163%20passing-brightgreen)](#testing)
 [![No build step](https://img.shields.io/badge/frontend-vanilla%20JS-f7df1e)](#frontend)
 
 ![MediCare Assistant home page](screenshots/home.png)
 
 ## Demo
 
-The walkthrough recording below (1 min 42 sec) shows the site sections, price and dosage lookups, a booking form filled from chat, a demo checkout form, and a grounded medical answer.
+The walkthrough recording below (1 min 43 sec) shows the site sections, price and dosage lookups, a booking form filled from chat, a demo checkout form, and a grounded medical answer.
 
 ![Demo recording](demo/medicare-demo.gif)
 
@@ -93,7 +93,7 @@ Browser
      -> action?  yes -> return reply + entities -> browser opens and fills a form
                  no  -> retrieve local chunks
                      -> medical question or no local matches? -> MedlinePlus summary
-                     -> optional LLM (disabled by default)
+                     -> optional LLM (Gemini -> Groq -> extractive fallback)
                      -> extractive fallback + disclaimer
 ```
 
@@ -103,9 +103,10 @@ Browser
   index has 14 heading-aware chunks, is built at startup, and is small enough to inspect by hand.
 - **Rule-based intent detection** makes the agent behaviour reproducible and testable. The language
   model is an optional answer generator, not the component that decides which form to open.
-- **No LLM by default** means the project works without an external generation provider and never
-  requires a generation key. Setting `LLM_PROVIDER` enables Gemini or Groq through an
-  OpenAI-compatible endpoint.
+- **No LLM required by default** means the project works without an external generation provider and
+  never requires an API key. Setting `GEMINI_API_KEY` and/or `GROQ_API_KEY` enables Gemini
+  (`gemini-3.5-flash-lite`) with automatic fallback to Groq (`openai/gpt-oss-120b`) and then the
+  local extractive answer.
 - **Vanilla frontend** has no build step, no framework runtime, and no dependency updates.
 
 ## Tech stack
@@ -116,19 +117,19 @@ Browser
 | Validation and settings | Pydantic v2, pydantic-settings |
 | Retrieval | scikit-learn TF-IDF, cosine similarity |
 | Medical grounding | MedlinePlus Web Service (NLM), XML parsing |
-| Optional generation | Gemini or Groq via OpenAI-compatible chat completions |
+| Optional generation | Gemini (`gemini-3.5-flash-lite`) -> Groq (`openai/gpt-oss-120b`) via OpenAI-compatible chat completions |
 | Frontend | HTML, CSS, vanilla JavaScript modules |
 | Tests | pytest, FastAPI TestClient |
 | Documentation | PDF (`docs/architecture.pdf`) |
-| Deployment | Render (`render.yaml`) |
+| Deployment | Render |
 
 ## Quick start
 
 Requires Python 3.12 or newer. Node is only needed if you want to syntax-check the frontend.
 
 ```bash
-git clone <your-repository-url>
-cd medicare-ai
+git clone https://github.com/ahmadmourad/medicare-agentic-rag.git
+cd medicare-agentic-rag
 python3.12 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
@@ -239,7 +240,7 @@ The application is deployed on Render.
 ## Project structure
 
 ```text
-medicare-ai/
+medicare-agentic-rag/
 ├── app/
 │   ├── main.py              FastAPI app, middleware, routes
 │   ├── config.py            Environment settings

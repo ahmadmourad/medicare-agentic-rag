@@ -127,7 +127,7 @@ def test_no_leftover_branding():
             or "tests" in path.parts
         ):
             continue
-        if path.suffix in {".jpg", ".png", ".ico", ".mp4", ".pdf"}:
+        if path.suffix in {".jpg", ".png", ".ico", ".mp4", ".gif", ".pdf"}:
             continue
         if "Cooked Devs" in path.read_text(encoding="utf-8", errors="ignore"):
             offenders.append(str(path.relative_to(ROOT)))
