@@ -10,6 +10,6 @@ services:
       - key: PYTHON_VERSION
         value: 3.12.7
       - key: LLM_PROVIDER
-        value: none
+        value: auto
       - key: MEDLINEPLUS_ENABLED
         value: "true"

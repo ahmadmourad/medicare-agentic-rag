@@ -145,36 +145,31 @@ All settings are optional. The defaults run the project without an LLM and witho
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
-| `LLM_PROVIDER` | `none` | `none`, `gemini`, or `groq` |
-| `LLM_API_KEY` | empty | Provider API key |
-| `LLM_MODEL` | provider default | Model name, for example `gemini-3.5-flash-lite` |
-| `LLM_FALLBACK_MODEL` | empty | Model tried after the primary model reports daily quota exhaustion |
-| `LLM_BASE_URL` | provider default | Override the OpenAI-compatible base URL |
+| `LLM_PROVIDER` | `auto` | `auto` (Gemini → Groq → local fallback), `none`, `gemini`, or `groq` |
+| `GEMINI_API_KEY` | empty | Primary Gemini API key |
+| `GEMINI_MODEL` | `gemini-3.5-flash-lite` | Primary Gemini model name |
+| `GROQ_API_KEY` | empty | Fallback Groq API key |
+| `GROQ_MODEL` | `openai/gpt-oss-120b` | Fallback Groq model name |
 | `LLM_TIMEOUT` | `25` | Provider request timeout in seconds |
 | `MEDLINEPLUS_ENABLED` | `true` | Enable the MedlinePlus lookup |
 | `MEDLINEPLUS_TIMEOUT` | `6` | MedlinePlus request timeout in seconds |
 | `RATE_LIMIT_PER_MINUTE` | `40` | Per-IP limit for chat, agent, and feedback; `0` disables it |
 | `FEEDBACK_PATH` | `data/feedback.jsonl` | Where feedback records are appended |
 
-Gemini example:
+Multi-provider fallback example (`.env`):
 
 ```bash
-LLM_PROVIDER=gemini
-LLM_API_KEY=your-key
-LLM_MODEL=gemini-3.5-flash-lite
+LLM_PROVIDER=auto
+GEMINI_API_KEY=your-gemini-key
+GEMINI_MODEL=gemini-3.5-flash-lite
+GROQ_API_KEY=your-groq-key
+GROQ_MODEL=openai/gpt-oss-120b
 ```
 
-Groq example:
-
-```bash
-LLM_PROVIDER=groq
-LLM_API_KEY=your-key
-LLM_MODEL=openai/gpt-oss-120b
-```
-
-If a model reports that its daily quota is exhausted, the backend marks it exhausted for the day and
-tries `LLM_FALLBACK_MODEL`. If no model can answer, or a request fails for another reason, the backend
-returns the deterministic extractive answer instead of failing the request.
+When both keys are configured, the backend starts with Gemini (`gemini-3.5-flash-lite`). If Gemini hits
+its daily quota (marked exhausted for the day) or fails for any reason, the backend automatically switches
+to Groq (`openai/gpt-oss-120b`). If Groq also fails or has no key configured, the backend returns the
+deterministic extractive answer (`none`) instead of failing the request.
 
 ## API
 
@@ -225,7 +220,7 @@ validation, security headers, rate limiting, feedback persistence, catalogue con
 validity, and the absence of leftover branding. Network calls are disabled in tests.
 
 ```text
-160 passed
+163 passed
 ```
 
 Current coverage: 100% (`pytest --cov=app --cov-report=term-missing`).

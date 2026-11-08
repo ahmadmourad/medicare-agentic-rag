@@ -8,7 +8,7 @@ from typing import Any
 
 import httpx
 
-from .config import settings
+from .config import clean_api_key, settings
 
 logger = logging.getLogger(__name__)
 
@@ -82,6 +82,24 @@ def _mark_exhausted(key: tuple[str, str, str]) -> None:
 
 
 def _resolve_targets() -> list[ModelTarget]:
+    explicit = settings.llm_provider.strip().lower()
+    if explicit == "none":
+        return []
+
+    gemini_key = clean_api_key(settings.gemini_api_key)
+    groq_key = clean_api_key(settings.groq_api_key)
+    if gemini_key or groq_key:
+        targets: list[ModelTarget] = []
+        if gemini_key:
+            gemini_url, gemini_default = PROVIDER_DEFAULTS["gemini"]
+            gemini_model = settings.gemini_model.strip() or gemini_default
+            targets.append(("gemini", gemini_url, gemini_model, gemini_key))
+        if groq_key:
+            groq_url, groq_default = PROVIDER_DEFAULTS["groq"]
+            groq_model = settings.groq_model.strip() or groq_default
+            targets.append(("groq", groq_url, groq_model, groq_key))
+        return targets
+
     provider = settings.provider
     if provider == "none":
         return []
@@ -93,7 +111,8 @@ def _resolve_targets() -> list[ModelTarget]:
     if not base_url or not primary_model:
         return []
 
-    if provider in PROVIDER_DEFAULTS and not settings.llm_api_key.strip():
+    api_key = clean_api_key(settings.llm_api_key)
+    if provider in PROVIDER_DEFAULTS and not api_key:
         logger.warning("%s provider selected but LLM_API_KEY is empty", provider)
         return []
 
@@ -102,7 +121,7 @@ def _resolve_targets() -> list[ModelTarget]:
         if model and model not in models:
             models.append(model)
 
-    return [(provider, base_url, model, settings.llm_api_key) for model in models]
+    return [(provider, base_url, model, api_key) for model in models]
 
 
 def _is_daily_quota_error(response: httpx.Response) -> bool:
@@ -167,10 +186,13 @@ def generate(question: str, context: str, intent: str) -> str | None:
     if not targets:
         return None
 
+    failed_providers: set[str] = set()
     for target in targets:
         provider, base_url, model, _ = target
-        key = _model_key(provider, base_url, model)
+        if provider in failed_providers:
+            continue
 
+        key = _model_key(provider, base_url, model)
         if _is_exhausted(key):
             logger.info("%s model %s is already exhausted for today; skipping", provider, model)
             continue
@@ -186,8 +208,9 @@ def generate(question: str, context: str, intent: str) -> str | None:
             )
             continue
         except ProviderFailure as exc:
+            failed_providers.add(provider)
             logger.warning("%s generation failed on model %s: %s", provider, model, exc)
-            return None
+            continue
 
     return None
 

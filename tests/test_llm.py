@@ -5,6 +5,7 @@ import httpx
 import pytest
 
 from app import llm
+from app.config import clean_api_key
 
 
 @pytest.fixture(autouse=True)
@@ -22,6 +23,10 @@ def configure(monkeypatch, **overrides):
         "llm_fallback_model": "fallback-model",
         "llm_base_url": "https://example.test/v1",
         "llm_timeout": 5.0,
+        "gemini_api_key": "",
+        "gemini_model": "gemini-3.5-flash-lite",
+        "groq_api_key": "",
+        "groq_model": "openai/gpt-oss-120b",
     }
     values.update(overrides)
     for key, value in values.items():
@@ -66,6 +71,111 @@ def install_client(monkeypatch, handler):
     fake = FakeClient(handler)
     monkeypatch.setattr(llm.httpx, "Client", lambda *args, **kwargs: fake)
     return fake
+
+
+def test_clean_api_key_and_provider_property(monkeypatch):
+    assert clean_api_key("  PASTE_YOUR_GEMINI_KEY_HERE  ") == ""
+    assert clean_api_key("  real-key  ") == "real-key"
+
+    configure(
+        monkeypatch,
+        llm_provider="auto",
+        gemini_api_key="gem-key",
+        groq_api_key="groq-key",
+    )
+    assert llm.settings.provider == "gemini+groq"
+
+    configure(monkeypatch, llm_provider="auto", gemini_api_key="gem-key", groq_api_key="")
+    assert llm.settings.provider == "gemini"
+
+    configure(monkeypatch, llm_provider="auto", gemini_api_key="", groq_api_key="groq-key")
+    assert llm.settings.provider == "groq"
+
+    configure(
+        monkeypatch,
+        llm_provider="auto",
+        gemini_api_key="PASTE_YOUR_GEMINI_KEY_HERE",
+        groq_api_key="PASTE_YOUR_GROQ_KEY_HERE",
+    )
+    assert llm.settings.provider == "none"
+    assert llm.generate("question", "context", "price") is None
+
+
+def test_gemini_then_groq_then_none_chain_on_quota(monkeypatch):
+    configure(
+        monkeypatch,
+        llm_provider="auto",
+        gemini_api_key="gem-key",
+        groq_api_key="groq-key",
+    )
+
+    state = {"gemini_quota": False, "groq_quota": False}
+
+    def handler(payload):
+        model = payload["model"]
+        if model == "gemini-3.5-flash-lite":
+            if state["gemini_quota"]:
+                return quota_error()
+            return success("gemini answer")
+        if state["groq_quota"]:
+            return quota_error()
+        return success("groq answer")
+
+    fake = install_client(monkeypatch, handler)
+
+    # 1. Starts with Gemini when healthy
+    assert llm.generate("question", "context", "price") == "gemini answer"
+    assert [c["json"]["model"] for c in fake.calls] == ["gemini-3.5-flash-lite"]
+
+    # 2. When Gemini hits daily quota, automatically falls back to Groq and skips Gemini next time
+    state["gemini_quota"] = True
+    assert llm.generate("question", "context", "price") == "groq answer"
+    assert [c["json"]["model"] for c in fake.calls] == [
+        "gemini-3.5-flash-lite",
+        "gemini-3.5-flash-lite",
+        "openai/gpt-oss-120b",
+    ]
+
+    assert llm.generate("question", "context", "price") == "groq answer"
+    assert [c["json"]["model"] for c in fake.calls] == [
+        "gemini-3.5-flash-lite",
+        "gemini-3.5-flash-lite",
+        "openai/gpt-oss-120b",
+        "openai/gpt-oss-120b",
+    ]
+
+    # 3. When Groq also hits quota, returns None so caller uses local fallback
+    state["groq_quota"] = True
+    assert llm.generate("question", "context", "price") is None
+
+
+def test_gemini_error_falls_back_to_groq_then_none(monkeypatch):
+    configure(
+        monkeypatch,
+        llm_provider="auto",
+        gemini_api_key="gem-key",
+        groq_api_key="groq-key",
+    )
+
+    state = {"groq_fails": False}
+
+    def handler(payload):
+        if payload["model"] == "gemini-3.5-flash-lite":
+            return make_response(status=500, body="gemini server error")
+        if state["groq_fails"]:
+            return make_response(status=503, body="groq unavailable")
+        return success("groq backup answer")
+
+    fake = install_client(monkeypatch, handler)
+
+    assert llm.generate("question", "context", "price") == "groq backup answer"
+    assert [c["json"]["model"] for c in fake.calls] == [
+        "gemini-3.5-flash-lite",
+        "openai/gpt-oss-120b",
+    ]
+
+    state["groq_fails"] = True
+    assert llm.generate("question", "context", "price") is None
 
 
 def test_generate_is_disabled_without_provider(monkeypatch):
@@ -145,7 +255,7 @@ def test_generate_quota_without_fallback_returns_none(monkeypatch):
     assert len(fake.calls) == 1
 
 
-def test_non_quota_error_does_not_try_fallback(monkeypatch):
+def test_non_quota_error_does_not_try_same_provider_fallback(monkeypatch):
     configure(monkeypatch)
     fake = install_client(monkeypatch, lambda payload: make_response(status=500, body="server error"))
 
