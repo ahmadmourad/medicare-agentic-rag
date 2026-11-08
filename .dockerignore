@@ -1,0 +1,12 @@
+.git
+.env
+.venv
+venv
+my_venv_name
+__pycache__
+.pytest_cache
+.coverage
+demo
+screenshots
+tests
+*.typ
