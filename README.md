@@ -121,7 +121,6 @@ Browser
 | Frontend | HTML, CSS, vanilla JavaScript modules |
 | Tests | pytest, FastAPI TestClient |
 | Documentation | PDF (`docs/architecture.pdf`) |
-| Deployment | Render |
 
 ## Quick start
 
@@ -233,10 +232,6 @@ cp Frontend/index.js /tmp/index.mjs && node --check /tmp/index.mjs
 cp Frontend/data.js /tmp/data.mjs && node --check /tmp/data.mjs
 ```
 
-## Deployment
-
-The application is deployed on Render.
-
 ## Project structure
 
 ```text
@@ -264,7 +259,6 @@ medicare-agentic-rag/
 ├── docs/                    Technical documentation PDF
 ├── requirements.txt
 ├── requirements-dev.txt
-├── render.yaml
 └── .env.example
 ```
 
@@ -288,7 +282,7 @@ medicare-agentic-rag/
 - The checkout is a demo and does not process payments.
 - The lexical retriever handles synonyms less gracefully than a dense embedding model.
 - MedlinePlus summaries are short extracts and may be incomplete or out of date.
-- On Render, feedback records use the ephemeral filesystem and are lost when the service restarts.
+- In cloud deployments, feedback records use an ephemeral filesystem and are lost when the service restarts.
 - The knowledge base is intentionally small and focused on this demo.
 
 ## Author

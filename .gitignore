@@ -11,3 +11,4 @@ data/feedback.jsonl
 *.log
 node_modules/
 *.typ
+old deployment configurations/
