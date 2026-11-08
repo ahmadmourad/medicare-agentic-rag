@@ -239,16 +239,7 @@ cp Frontend/data.js /tmp/data.mjs && node --check /tmp/data.mjs
 
 ## Deployment
 
-The repository includes a Render blueprint:
-
-1. Push the repository to GitHub.
-2. In Render, choose **New → Blueprint** and select the repository.
-3. Apply `render.yaml`.
-4. Keep `LLM_PROVIDER=none` to run without a generation provider, or add a provider key as a
-   secret environment variable.
-
-The blueprint uses Python 3.12, installs `requirements.txt`, starts Uvicorn on `$PORT`, and uses
-`/api/health` as the health check. No database or persistent disk is required.
+The application is deployed on Render.
 
 ## Project structure
 
